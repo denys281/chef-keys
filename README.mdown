@@ -1,33 +1,30 @@
 # chef-keys
 
-Creates keys in `/home/chef/.ssh/` from a data bag.
-
+creates ssh keys in a destined user dir
 
 ## Assumptions
 
-`/home/chef` belongs to user `chef` which belongs to group `chef`.
-
-
 ## Attributes
-
-* `keys/databag`: string containing name of data bag containing the keys
-* `keys/key_name`: name of the keypair to be copied
 
 
 ## Recipes
 
-* `keys`: copies keys into `/home/chef/.ssh/`
+* `keys`: copies keys into `/home/#{$client_username}/.ssh/`
 
 
-## Data bag structure example
+## json structure example
 
-    "ssh_keys": {
-      "machine_1": {
-        "id_rsa": "private key goes here",
-        "id_rsa.pub": "public key goes here"
-      }
-    }
-
+	chef.json = {
+		"ssh_keys"=> {
+			"username"=> $client_username,
+			"usergroup"=> $client_username,
+			"userhomedir"=> "/var/customers/webs/#{$client_username}",
+			"id_rsa"=> "private key goes here",
+			"id_rsa.pub"=> "public key goes here"
+				"id_dsa"=> "private key goes here",
+			"id_dsa.pub"=> "public key goes here"
+		},
+	}
 
 ## Legal
 
